@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "DialogTest";
+
+}
+
+<div class="btn btn-default" id="button">show dialog</div>
+
+
+<div id="dialogContainer" class="dialog-container">
+    <div class="popupBackground"></div>
+    <div class="dialog dialogdetail">
+        <div class="dialog-topLine" style="background-color: #34aadc; border-top-left-radius: 3px;
+                                      border-top-right-radius: 3px; height: 40px;">
+            <div style="float: left; padding-left: 10px; padding-top: 8px; font-weight: bold">
+                <span class="header_dialog">test</span>
+            </div>
+            <div class="dialog-closeButton">C</div>
+            <div class="dialog-maximizeButton" style="float: right">M</div>
+        </div>
+        <div class="cnt" style="overflow: auto;">
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+
+            $('#dialogContainer').ssdialog({
+                "width": 500,
+                "height": 300,
+                "title": "me me var",
+                opened: function () {
+                    $(this).find('.cnt').append('gaixsna<br/>');
+                },
+                closing: function () {
+                    $(this).find('.cnt').append('ixureba<br/>');
+                },
+                closed: function () {
+                    $(this).find('.cnt').append('daixura<br/>');
+                }
+            });
+
+
+            $("#button").on("click", function () {
+                $('#dialogContainer').ssdialog('open');
+            });
+
+        });
+
+    </script>
+}
+
