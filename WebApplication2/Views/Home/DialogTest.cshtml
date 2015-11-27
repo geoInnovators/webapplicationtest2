@@ -3,7 +3,9 @@
 
 }
 
-<div class="btn btn-default" id="button">show dialog</div>
+<div class="btn btn-default" id="button1">show dialog1</div>
+<div class="btn btn-default" id="button2">show dialog2</div>
+<div class="btn btn-default" id="button3">show dialog3</div>
 
 
 <div id="dialogContainer" class="dialog-container">
@@ -31,20 +33,21 @@
                 "width": 500,
                 "height": 300,
                 "title": "me me var",
-                opened: function () {
-                    $(this).find('.cnt').append('gaixsna<br/>');
-                },
-                closing: function () {
-                    $(this).find('.cnt').append('ixureba<br/>');
-                },
-                closed: function () {
-                    $(this).find('.cnt').append('daixura<br/>');
-                }
+                "ajaxUrl": "/Home/ViewTest"
             });
 
 
-            $("#button").on("click", function () {
-                $('#dialogContainer').ssdialog('open');
+            $("#button1").on("click", function () {
+                $('#dialogContainer').ssdialog('title','pirveli');
+                $('#dialogContainer').ssdialog('open', {button:1} );
+            });
+            $("#button2").on("click", function () {
+                $('#dialogContainer').ssdialog('title', 'meore');
+                $('#dialogContainer').ssdialog('open', { button: 2 });
+            });
+            $("#button3").on("click", function () {
+                $('#dialogContainer').ssdialog('title', 'mesame');
+                $('#dialogContainer').ssdialog('open', { button: 3 });
             });
 
         });

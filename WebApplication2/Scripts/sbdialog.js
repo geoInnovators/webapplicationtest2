@@ -69,7 +69,7 @@
     function setTitle(obj, title) {
         var pluginData = obj.data('ssdialog');
         pluginData.title = title;
-        obj.find('.header_dialog').html(options.title);
+        obj.find('.header_dialog').html(title);
         obj.data('ssdialog', pluginData);
     }
 
@@ -89,7 +89,7 @@
             contentType: 'application/json',
             data: JSON.stringify(pluginData.ajaxParams),
             beforeSend: function () {
-                obj.find('.cnt').html('<div style="height:325px;text-align: center;"><img src="/Images/loading_icon.gif" /></div>');
+               // obj.find('.cnt').html('<div style="height:325px;text-align: center;"><img src="/Images/loading_icon.gif" /></div>');
             },
             complete: function () {
                 // $(".loadingPhoto").hide();
@@ -173,7 +173,7 @@
         });
     };
 
-    methods.refresh = function (param) {
+    methods.refresh = function (params) {
         return this.each(function () {
             var $this = $(this), pluginData = $this.data('ssdialog');
             //Check if plugin is initialized

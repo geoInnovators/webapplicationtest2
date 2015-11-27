@@ -27,6 +27,14 @@ namespace WebApplication2.Controllers
             return View();
         }
 
+        public ActionResult ViewTest(int button)
+        {
+            ViewBag.button = button;
+            return PartialView();
+        }
+
+        
+
 
         public ActionResult DialogTest()
         {
