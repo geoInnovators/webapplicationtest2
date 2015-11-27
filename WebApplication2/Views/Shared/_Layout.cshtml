@@ -6,6 +6,12 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/sbdialog.js"></script>
+
+
     <link href="~/Content/Master.css" rel="stylesheet" />
 </head>
 <body>
@@ -36,11 +42,6 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
-    @Scripts.Render("~/bundles/bootstrap")
-    <script src="~/Scripts/sbdialog.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

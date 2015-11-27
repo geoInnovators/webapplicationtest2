@@ -111,10 +111,6 @@
                 obj.data('ssdialog', options);
                 obj.find(".dialogdetail").draggable({ handle: ".dialog-topLine" });
                 obj.find('.header_dialog').html(options.title);
-                if (options.expanded === true)
-                    expand(obj);
-                else
-                    collapse(obj);
                 obj.find('.dialog-maximizeButton').on('click', function () {
                     toggleExpand(obj);
                 });
@@ -123,6 +119,9 @@
                 });
                 if (options.ajaxUrl === '') {
                     obj.find('.cnt').html(options.content);
+                }
+                if (options.visibility === true) {
+                    methods.open.apply(obj);
                 }
             }
         });
@@ -137,6 +136,10 @@
                 if (pluginData.ajaxUrl !== '')
                     loadContent($this, params);
                 open($this);
+                if (pluginData.expanded === true)
+                    expand($this);
+                else
+                    collapse($this);
                 if (typeof pluginData.opened == 'function') {
                     pluginData.opened.call(this);
                 }
