@@ -7,7 +7,6 @@
         title: "",
         expanded: false,
         visibility: false,
-        content: "",
         ajaxUrl: '',
         opened: function () { },
         closing: function () { },
@@ -117,9 +116,6 @@
                 obj.find('.dialog-closeButton').on('click', function () {
                     methods.close.apply(obj);
                 });
-                if (options.ajaxUrl === '') {
-                    obj.find('.cnt').html(options.content);
-                }
                 if (options.visibility === true) {
                     methods.open.apply(obj);
                 }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@using WebApplication2.Controllers
+@{
     ViewBag.Title = "DialogTest";
 
 }
@@ -8,30 +9,14 @@
 <div class="btn btn-default" id="button3">show dialog3</div>
 
 
-@*<div id="dialogContainer" class="dialog-container">
-        <div class="popupBackground"></div>
-        <div class="dialog dialogdetail">
-            <div class="dialog-topLine" style="background-color: #34aadc; border-top-left-radius: 3px;
-                                          border-top-right-radius: 3px; height: 40px;">
-                <div style="float: left; padding-left: 10px; padding-top: 8px; font-weight: bold">
-                    <span class="header_dialog">test</span>
-                </div>
-                <div class="dialog-closeButton">C</div>
-                <div class="dialog-maximizeButton" style="float: right">M</div>
-            </div>
-            <div class="cnt" style="overflow: auto;">
-            </div>
-        </div>
-    </div>*@
-
-
 @SBDialogView.SBDialog(new SBDialogParams
 {
     Id = "dialogContainer",
     Width = 800,
     Height = 300,
     Title = "test header",
-    Content = "test test"
+    Content = Html.Partial("~/Views/Home/ViewTest.cshtml",DateTime.Today ).ToHtmlString(),
+    Page = this
 })
 @section scripts
 {

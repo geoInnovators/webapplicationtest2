@@ -1,4 +1,6 @@
-﻿<h4>ახლა არის @DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") დრო</h4>
+﻿@model DateTime
+<h4>ახლა არის @DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") დრო</h4>
+<h4>მოდელით @Model.ToString("dd/MM/yyyy HH:mm:ss")</h4>
 <br/>
 <div class="btn btn-danger" onclick="refreshDialog();">refresh</div>
 <script type="text/javascript">

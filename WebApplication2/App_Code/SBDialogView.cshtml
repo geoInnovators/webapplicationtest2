@@ -1,6 +1,15 @@
-﻿@using WebApplication2
+﻿@using System.Web.Mvc.Html
+@using WebApplication2
 @helper SBDialog(SBDialogParams param)
 {
+        // Get page and pull helper references from it.
+        var wvp = PageContext.Page as System.Web.Mvc.WebViewPage;
+        var Url = wvp.Url; // UrlHelper access
+        var Html = wvp.Html; // HtmlHelper access
+        var ViewBag = wvp.ViewBag;    
+    
+    
+    
     <script type="text/javascript">
         $(function () {
             $('#@param.Id').ssdialog({
@@ -27,10 +36,6 @@
                 @if (!String.IsNullOrEmpty(param.AjaxUrl))
                 {
                 @:  "ajaxUrl": '@param.AjaxUrl' ,
-                                }
-                @if (!String.IsNullOrEmpty(param.Content))
-                {
-                   @:   "content": '@param.Content' ,
                                 }
                 @if (!String.IsNullOrEmpty(param.EventOpened))
                 {
@@ -59,6 +64,7 @@
                 <div class="dialog-maximizeButton" style="float: right">M</div>
             </div>
             <div class="cnt" style="overflow: auto;">
+                @Html.Raw( param.Content )
             </div>
         </div>
     </div>
