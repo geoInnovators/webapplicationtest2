@@ -1,0 +1,3 @@
+﻿function sbconfirm(question, func) {
+    
+}
