@@ -10,7 +10,7 @@
     <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/sbdialog.js"></script>
-
+    <script src="~/Scripts/sbalerts.js"></script>
 
     <link href="~/Content/Master.css" rel="stylesheet" />
 </head>
@@ -44,24 +44,62 @@
     </div>
     @RenderSection("scripts", required: false)
 
-    <div class="alertBackground"></div>
-    <div class="alertDialog">
-        <div class="question-container">
-            <span class="glyphicon glyphicon-question-sign btn-lg" aria-hidden="true"></span>
-            <span class="question">გსურთ ოპერაციის შესრულება?</span>
-        </div>
-        <div class="alert-buttons">
-            <div class="btn btn-danger" style="float: right; margin-left: 15px;">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                არა
+<div class="template-containers" style="display: none">
+
+    <div class="alert-popup">
+        <div class="alertBackground"></div>
+        <div class="alertDialog">
+            <div class="question-container">
+                <span class="glyphicon glyphicon-question-sign btn-lg" aria-hidden="true"></span>
+                <span class="question">გსურთ ოპერაციის შესრულება?</span>
             </div>
-            <div class="btn btn-success" style="float: right">
-                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                დიახ
+            <div class="alert-buttons">
+                <div class="btn btn-danger" style="float: right; margin-left: 15px;">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    არა
+                </div>
+                <div class="btn btn-success" style="float: right">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    დიახ
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="success-popup">
+        <div class="alertBackground"></div>
+        <div class="alertDialog">
+            <div class="success-container">
+                <span class="glyphicon glyphicon-ok btn-lg" aria-hidden="true"></span>
+                <span class="success-text">ოპერაცია დასრულდა წარმატებით</span>
+            </div>
+            <div class="alert-buttons">
+                <div class="btn btn-success" style="float: right">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    OK
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="error-popup">
+        <div class="alertBackground"></div>
+        <div class="alertDialog">
+            <div class="error-container">
+                <span class="glyphicon glyphicon-remove btn-lg" aria-hidden="true"></span>
+                <span class="error-text">შეცდომა ოპერაციის შესრულებისას</span>
+            </div>
+            <div class="alert-buttons">
+                <div class="btn btn-danger" style="float: right">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    OK
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 
 </body>
 </html>

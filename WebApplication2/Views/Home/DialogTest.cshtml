@@ -7,8 +7,7 @@
 <div class="btn btn-default" id="button1">show dialog1</div>
 <div class="btn btn-default" id="button2">show dialog2</div>
 <div class="btn btn-default" id="button3">show dialog3</div>
-
-
+<div class="btn btn-default" id="button4">show dialog4</div>
 
 
 @SBDialogView.SBDialog(new SBDialogParams
@@ -37,11 +36,17 @@
                 $('#dialogContainer').ssdialog('open');
             });
             $("#button2").on("click", function () {
-                $('#dialogContainer').ssdialog('open', { button: 2 });
+                sbconfirm('გსურთ კაი საქციელი?', function() {
+                    alert('kaia');
+                });
             });
             $("#button3").on("click", function () {
-                $('#dialogContainer').ssdialog('open', { button: 3 });
+                sbsuccess('ოპერაცია დასრულდა წარმატებით', true);
             });
+            $("#button4").on("click", function () {
+                sberror('რაღაცამ ვერ იმუშავა');
+            });
+
 
         });
 

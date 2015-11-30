@@ -1,20 +1,40 @@
 ﻿function sbconfirm(question, func) {
-    var background = $('<div class="alertBackground"></div>');
-    var dialog = $('<div class="alertDialog">' +
-                       '<div style="margin-bottom: 15px">' +
-                        '<span class="glyphicon glyphicon-question-sign btn-lg" aria-hidden="true"></span>' +
-                        '<span style="font-size: 16px; font-weight: bold">გსურთ ოპერაციის შესრულება?</span>' +
-                         '</div>' +
-                        '<div>' +
-                        '<div class="btn btn-danger" style="float: right; margin-left: 15px;">'+
-                            '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
-                                    არა
-</div>
-<div class="btn btn-success" style="float: right">
-    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-    დიახ
-</div>
-</div>
-</div>');
-    $('body').append()
+    var alert = $('.template-containers').find('.alert-popup').clone();
+    alert.appendTo('body');
+    alert.find('.question').html(question);
+    alert.find('.btn-success').on('click', function () {
+        alert.remove();
+        func();
+    });
+    alert.find('.btn-danger').on('click', function () {
+        alert.remove();
+    });
+}
+
+function sbsuccess(text, fadeout) {
+    var alert = $('.template-containers').find('.success-popup').clone();
+    alert.appendTo('body');
+    alert.find('.success-text').html(text);
+    if (fadeout) {
+        alert.find('.alert-buttons').hide();
+        setTimeout(function () {
+            alert.find(".alertDialog").fadeOut("slow", function () {
+                alert.remove();
+            });
+        }, 3000);
+    } else {
+        alert.find('.btn-success').on('click', function () {
+            alert.remove();
+        });
+    }
+}
+
+function sberror(text) {
+    var alert = $('.template-containers').find('.error-popup').clone();
+    alert.appendTo('body');
+    alert.find('.error-text').html(text);
+    alert.find('.btn-danger').on('click', function () {
+        alert.remove();
+    });
+
 }
