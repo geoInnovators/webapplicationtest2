@@ -1,13 +1,24 @@
 ﻿@using WebApplication2.Controllers
 @{
     ViewBag.Title = "DialogTest";
-
 }
 
 <div class="btn btn-default" id="button1">show dialog1</div>
 <div class="btn btn-default" id="button2">show dialog2</div>
 <div class="btn btn-default" id="button3">show dialog3</div>
 <div class="btn btn-default" id="button4">show dialog4</div>
+
+<div class="tab-container">
+    <ul class="tab-ul">
+        <li class="tab-li tab-active">pirveli</li>
+        <li class="tab-li">meore</li>
+        <li class="tab-li">mesame</li>
+    </ul>
+    <div class="tab-cnt">
+        
+    </div>
+</div>
+
 
 
 @SBDialogView.SBDialog(new SBDialogParams
@@ -24,14 +35,6 @@
     <script type="text/javascript">
         $(function () {
 
-            //$('#dialogContainer').ssdialog({
-            //    "width": 500,
-            //    "height": 300,
-            //    "title": "me me var",
-            //    "ajaxUrl": "/Home/ViewTest"
-            //});
-
-
             $("#button1").on("click", function () {
                 $('#dialogContainer').ssdialog('open');
             });
@@ -46,7 +49,6 @@
             $("#button4").on("click", function () {
                 sberror('რაღაცამ ვერ იმუშავა');
             });
-
 
         });
 

@@ -74,3 +74,14 @@
         </div>
     </div>
 }
+
+@helper SBTab(SBTabParams param)
+{
+    // Get page and pull helper references from it.
+    var wvp = PageContext.Page as System.Web.Mvc.WebViewPage;
+    var Url = wvp.Url; // UrlHelper access
+    var Html = wvp.Html; // HtmlHelper access
+    var ViewBag = wvp.ViewBag;
+
+
+}

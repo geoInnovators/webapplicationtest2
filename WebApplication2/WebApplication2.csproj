@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\SBDialogParams.cs" />
+    <Content Include="App_Code\SBTabParams.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
