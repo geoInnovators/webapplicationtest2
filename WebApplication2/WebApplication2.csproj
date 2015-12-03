@@ -234,6 +234,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sbalerts.js" />
     <Content Include="Scripts\sbdialog.js" />
+    <Content Include="Scripts\sbtab.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
