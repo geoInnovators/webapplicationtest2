@@ -5,12 +5,22 @@
         tabsize: 'normal',  // large,normal,small
         activeIndex: 0,
         firstVisible: true,
+        tabAutoRefresh: false,
+        // tabAjaxParams
+        refreshOnInit: false,
+        role: 'normal',  // normal,edit,create,path
+        confirmDialogs: true,
         tabs: [
             {
                 index: 0,
                 title: '',
                 isActive: true,
-                content: ''  // ajaxurl an content
+                content: ''  // ajaxurl an content, ajaxParams
+                // ajaxUrl
+                // ajaxParams
+                // autoRefresh
+                // isEditable
+                // confirmSave
             }
         ]
     };
@@ -27,44 +37,40 @@
     };
 
 
-    function expand(obj) {
-        var pluginData = obj.data('ssdialog');
-        obj.find('.dialogdetail').css({ 'width': '100%', 'height': '100%', 'top': 0, 'left': 0, 'margin-left': 0, 'margin-top': 0 });
-        obj.find('.cnt').height(obj.find('.dialogdetail').height() - obj.find('.dialog-topLine').height());
-        pluginData.expanded = true;
-        obj.data('ssdialog', pluginData);
+
+    function refresh(obj) {
+        var pluginData = obj.data('sbtab');
+        var cnt = obj.find('.tab-cnt');
+        var index = pluginData.activeIndex;
+        var activeTab = pluginData.tabs[index];
+        if (activeTab.ajaxUrl) {
+            $.ajax({
+                url: pluginData.ajaxUrl,
+                type: "Post",
+                dataType: "html",
+                contentType: 'application/json',
+                data: JSON.stringify(activeTab.ajaxParams),
+                beforeSend: function () {
+                    // obj.find('.cnt').html('<div style="height:325px;text-align: center;"><img src="/Images/loading_icon.gif" /></div>');
+                },
+                complete: function () {
+                    // $(".loadingPhoto").hide();
+                },
+                success: function (data) {
+                    cnt.html($(data));
+                },
+                error: function () {
+                    alert('სისტემური შეცდომა');
+                }
+            });
+        } else {
+            cnt.html(activeTab.content);
+        }
+        obj.data('sbtab', pluginData);
     }
 
-    function collapse(obj) {
-        var pluginData = obj.data('ssdialog');
-        var width = pluginData.width;
-        var height = pluginData.height;
-        obj.find('.dialogdetail').css({ 'width': width, 'height': height, 'top': '50%', 'left': '50%', 'margin-left': -width / 2, 'margin-top': -height / 2 });
-        obj.find('.cnt').height(obj.find('.dialogdetail').height() - obj.find('.dialog-topLine').height());
-        pluginData.expanded = false;
-        obj.data('ssdialog', pluginData);
-    }
-
-    function toggleExpand(obj) {
-        var pluginData = obj.data('ssdialog');
-        if (pluginData.expanded === false)
-            expand(obj);
-        else
-            collapse(obj);
-    }
-
-    function open(obj) {
-        var pluginData = obj.data('ssdialog');
-        obj.show();
-        pluginData.visibility = true;
-        obj.data('ssdialog', pluginData);
-    }
-
-    function close(obj) {
-        var pluginData = obj.data('ssdialog');
-        obj.hide();
-        pluginData.visibility = false;
-        obj.data('ssdialog', pluginData);
+    function gotoIndex(obj, index  ) {
+        
     }
 
     function setTitle(obj, title) {
@@ -72,6 +78,34 @@
         pluginData.title = title;
         obj.find('.header_dialog').html(title);
         obj.data('ssdialog', pluginData);
+    }
+
+
+    function editTab(obj) {
+        var pluginData = obj.data('sbtab');
+        var activeTab = pluginData.tabs[pluginData.activeIndex];
+        activeTab.isEditable = true;
+        obj.data('sbtab', pluginData);
+        refresh(obj);
+    }
+
+    function saveTab(obj) {
+        var pluginData = obj.data('sbtab');
+        var activeTab = pluginData.tabs[pluginData.activeIndex];
+        sbconfirm(activeTab.confirmSave, function () {
+            // save logika
+        });
+
+
+        refresh(obj);
+    }
+
+    function cancelSaveTab(obj) {
+        var pluginData = obj.data('sbtab');
+        var activeTab = pluginData.tabs[pluginData.activeIndex];
+        activeTab.isEditable = false;
+        obj.data('sbtab', pluginData);
+        refresh(obj);
     }
 
 
@@ -133,6 +167,18 @@
                         li.addClass('.tab-active');
                     }
                 }
+                if (options.role === 'edit') {
+                    obj.find('.tab-ftr').show();
+                    obj.find('.tab-ftr').find('.tab-btn-edit').on('click', function() {
+                        editTab(obj);
+                    });
+                    obj.find('.tab-ftr').find('.tab-btn-save').on('click', function () {
+                        saveTab(obj);
+                    });
+                    obj.find('.tab-ftr').find('.tab-btn-cancel').on('click', function () {
+                        cancelSaveTab(obj);
+                    });
+                }
                 // check firstVisible
                 if ((options.tabs.length === 1) && !firstVisible)
                     obj.find('.tab-li').hide();
@@ -141,7 +187,7 @@
         });
     };
 
-    methods.open = function (params) {
+    methods.goto = function (index, params) {
         return this.each(function () {
             var $this = $(this), pluginData = $this.data('ssdialog');
 
@@ -162,33 +208,27 @@
     };
 
 
-    methods.close = function () {
-        return this.each(function () {
-            var $this = $(this), pluginData = $this.data('ssdialog');
-            //Check if plugin is initialized
-            if (pluginData) {
-                if (typeof pluginData.closing == 'function') {
-                    var res = pluginData.closing.call(this);
-                    if (res === false) return;
-                }
-                close($this);
-                if (typeof pluginData.closed == 'function') {
-                    pluginData.closed.call(this);
-                }
-            }
-        });
-    };
-
-    methods.title = function (param) {
+    methods.gotoNext = function (index, params) {
         return this.each(function () {
             var $this = $(this), pluginData = $this.data('ssdialog');
 
             //Check if plugin is initialized
             if (pluginData) {
-                setTitle($this, param);
+                if (pluginData.ajaxUrl !== '')
+                    loadContent($this, params);
+                open($this);
+                if (pluginData.expanded === true)
+                    expand($this);
+                else
+                    collapse($this);
+                if (typeof pluginData.opened == 'function') {
+                    pluginData.opened.call(this);
+                }
             }
         });
     };
+
+
 
     methods.refresh = function (params) {
         return this.each(function () {
