@@ -181,13 +181,33 @@
                 }
                 if (options.role === 'edit') {
                     obj.find('.tab-ftr').show();
+                    obj.find('.tab-ftr').find('.btn').hide();
+                    obj.find('.tab-ftr').find('.tab-btn-edit').show();
                     obj.find('.tab-ftr').find('.tab-btn-edit').on('click', function() {
                         editTab(obj);
                     });
+                    obj.find('.tab-ftr').find('.tab-btn-save').show();
                     obj.find('.tab-ftr').find('.tab-btn-save').on('click', function () {
                         saveTab(obj);
                     });
+                    obj.find('.tab-ftr').find('.tab-btn-cancel').show();
                     obj.find('.tab-ftr').find('.tab-btn-cancel').on('click', function () {
+                        cancelSaveTab(obj);
+                    });
+                }
+                if (options.role === 'create') {
+                    obj.find('.tab-ftr').show();
+                    obj.find('.tab-ftr').find('.btn').hide();
+                    obj.find('.tab-ftr').find('.tab-btn-next').show();
+                    obj.find('.tab-ftr').find('.tab-btn-next').on('click', function () {
+                        editTab(obj);
+                    });
+                    obj.find('.tab-ftr').find('.tab-btn-prev').show();
+                    obj.find('.tab-ftr').find('.tab-btn-prev').on('click', function () {
+                        saveTab(obj);
+                    });
+                    obj.find('.tab-ftr').find('.tab-btn-create').show();
+                    obj.find('.tab-ftr').find('.tab-btn-create').on('click', function () {
                         cancelSaveTab(obj);
                     });
                 }
