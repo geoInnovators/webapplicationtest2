@@ -93,9 +93,21 @@
         var pluginData = obj.data('sbtab');
         var activeTab = pluginData.tabs[pluginData.activeIndex];
         sbconfirm(activeTab.confirmSave, function () {
-            // save logika
-        });
+            $.ajax($.extend({
+                beforeSend: function () {
+                    // $('#cnt3').html('<div style="height:325px;text-align: center;"><img src="/Images/loading_icon.gif" /></div>');
+                },
+                complete: function () {
+                    // $(".loadingPhoto").hide();
+                },
+                success: function (data) {
+                    // aq iwereab successis logika
+                },
+                error: function () {
 
+                }
+            }), obj.find('.tab-cnt')[0].initAjaxParams(obj.find('.tab-cnt')));
+        });
 
         refresh(obj);
     }

@@ -1,7 +1,23 @@
-﻿
-@{
-    ViewBag.Title = "TestTabView";
-}
+﻿@model WebApplication2.Models.TestTabViewModel
 
-<h2>TestTabView</h2>
-
+<form class="my_form" novalidate="novalidate">
+    @if (Model.IsEditable)
+    {
+        @Html.TextBoxFor(o => o.Username)
+    }
+    else
+    {
+        <span>@Model.Username</span>
+    }
+</form>
+<script type="text/javascript">
+    function initAjaxParams(cnt) {
+        return {
+            url: "/Admin/AdminClubsScheduleSave",
+            type: "Post",
+            dataType: "html",
+            // contentType: 'application/json',
+            data: cnt.find('.my_form').serialize()
+        };
+    }
+</script>
