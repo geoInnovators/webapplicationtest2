@@ -58,6 +58,7 @@
                 },
                 success: function (data) {
                     cnt.html($(data));
+
                 },
                 error: function () {
                     alert('სისტემური შეცდომა');

@@ -11,13 +11,18 @@
     }
 </form>
 <script type="text/javascript">
-    function initAjaxParams(cnt) {
+    function initSaveAjaxParams(cnt) {
         return {
-            url: "/Admin/AdminClubsScheduleSave",
             type: "Post",
             dataType: "html",
             // contentType: 'application/json',
             data: cnt.find('.my_form').serialize()
         };
+    }
+    function initCreateAjaxParams(cnt) {
+        return {};
+    }
+    function afterRefresh(cnt, isEditable) {
+        
     }
 </script>
