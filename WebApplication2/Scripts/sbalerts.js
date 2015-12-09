@@ -21,7 +21,7 @@ function sbsuccess(text, fadeout) {
             alert.find(".alertDialog").fadeOut("slow", function () {
                 alert.remove();
             });
-        }, 3000);
+        }, 2000000);
     } else {
         alert.find('.btn-success').on('click', function () {
             alert.remove();
