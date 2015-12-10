@@ -11,7 +11,8 @@
     }
 </form>
 <script type="text/javascript">
-    function initSaveAjaxParams(cnt) {
+    function TestTabView_initSaveAjaxParams(cnt) {
+        // return save ajax params to be send
         return {
             type: "Post",
             dataType: "html",
@@ -19,10 +20,14 @@
             data: cnt.find('.my_form').serialize()
         };
     }
-    function initCreateAjaxParams(cnt) {
+    function TestTabView_initCreateAjaxParams(cnt) {
+        // return save ajax params to be send
         return {};
     }
-    function afterRefresh(cnt, isEditable) {
-        
+    function TestTabView_afterRefresh(cnt, isEditable) {
+        // after refresh call
+    }
+    function TestTabView_afterCreateRefresh(cnt) {
+        // after create refresh call
     }
 </script>
