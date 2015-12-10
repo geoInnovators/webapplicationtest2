@@ -40,8 +40,7 @@
             წინა
         </div>
         <div class="btn btn-info tab-btn-create">
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-            შენახვა
+            ინფორმაცია
         </div>
     </div>
 </div>
@@ -66,7 +65,7 @@
                 $('#dialogContainer').ssdialog('open');
             });
             $("#button2").on("click", function () {
-                sbconfirm('გსურთ კაი საქციელი?', function() {
+                sbconfirm('გსურთ მოსწავლის გაუქმება?', function() {
                     alert('kaia');
                 });
             });
@@ -74,7 +73,7 @@
                 sbsuccess('ოპერაცია დასრულდა წარმატებით', true);
             });
             $("#button4").on("click", function () {
-                sberror('რაღაცამ ვერ იმუშავა');
+                sberror('სისტემური შეცდომა');
             });
 
         });
