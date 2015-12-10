@@ -16,9 +16,11 @@
                 title: '',
                 isActive: true,
                 content: ''  // ajaxurl an content, ajaxParams
-                // ajaxUrl
-                // ajaxParams
-                // autoRefresh
+                // ajaxUrl       --> refresh-ის მისამართი
+                // ajaxParams    --> refresh-ის პარამეტრები
+                // ajaxCreateUrl       --> ახალი ჩანაწერების refresh-ის მისამართი
+                // ajaxCreateParams    --> ახალი ჩანაწერების refresh-ის პარამეტრები
+                // autoRefresh   --> უკვე ჩატვირთული გვერდის ხელთავიდან ჩატვირთვა თუ არა
                 // isEditable
                 // confirmSave
             }
@@ -37,7 +39,7 @@
     };
 
 
-
+    ///////// refresh, edit, cancel, save /////////
     function refresh(obj) {
         var pluginData = obj.data('sbtab');
         var cnt = obj.find('.tab-cnt');
@@ -58,7 +60,6 @@
                 },
                 success: function (data) {
                     cnt.html($(data));
-
                 },
                 error: function () {
                     alert('სისტემური შეცდომა');
@@ -69,6 +70,24 @@
         }
         obj.data('sbtab', pluginData);
     }
+    ///////////////////////////////////////////////
+
+
+
+    ///////// refreshCreate,  next, prev, Finish, cancel //////
+
+    ///////////////////////////////////////////////////////////
+
+
+
+    ///////// gotoIndex, gofirst, golast ////////////
+
+    /////////////////////////////////////////////////
+
+
+
+
+
 
     function gotoIndex(obj, index  ) {
         
