@@ -139,8 +139,6 @@
     }
     ///////////////////////////////////////////////
 
-    // TODO: add new tab,
-    // TODO: remove tab
 
     ///////// refreshCreate,  next, prev, Finish, cancel //////
     function createAfterRefreshCall(obj) {
@@ -263,6 +261,11 @@
         var activeTab = pluginData.tabs[index];
         activeTab.isEditable = false;
         obj.data('sbtab', pluginData);
+
+        var lis = obj.find('.tab-ul').find('li');
+        lis.removeClass('tab-active');
+        $(lis[index]).addClass('tab-active');
+
         refresh(obj);
     }
 
@@ -275,6 +278,41 @@
         gotoIndex(obj, pluginData.tabs.length -1);
     }
     /////////////////////////////////////////////////
+
+
+    function addNewTab(obj, tabParams) {
+        var pluginData = obj.data('sbtab');
+        var newTab = $.extend({}, defaults.tabs[0], tabParams);
+        pluginData.tabs.push(newTab);
+        obj.data('sbtab', pluginData);
+        var li = $('<li class="tab-li"></li>');
+        li.html(newTab.title);
+        obj.find('.tab-ul').append(li);
+        li.on('click', function () {
+            gotoIndex(obj, pluginData.tabs.length-1 ); 
+        });
+    }
+
+    function removeTab(obj, index) {
+        var pluginData = obj.data('sbtab');
+        pluginData.tabs.splice(index, 1);
+
+        obj.find('.tab-ul').find('li:last').remove();
+        if (pluginData.activeIndex >= index) {
+            pluginData.activeIndex = pluginData.activeIndex - 1;
+        }
+        var lis = obj.find('.tab-ul').find('li');
+        var i;
+        for (i = 0; i < lis.length; i++) {
+            var li = $(lis[i]);
+            li.on('click', function () {
+                gotoIndex(obj, i); // TODO: gasatestia
+            });
+        }
+        obj.data('sbtab', pluginData);
+        gotoIndex(obj, pluginData.activeIndex);
+    }
+
 
 
 
@@ -309,15 +347,18 @@
                     // set title
                     if (!cTab.title) cTab.title = '';
                     li.html(cTab.title);
-                    // set index
-                    options.tabs[i].index = i;
                     // check active state
                     if (options.tabs[i].isActive) {
                         options.activeIndex = i;
-                        li.addClass('.tab-active');
+                        li.addClass('tab-active');
                     }
+                    var index = i;
+                    li.on('click', function () {
+                        gotoIndex(obj, index); // TODO: gasatestia
+                    });
                 }
-                // TODO: tab click
+
+                // TODO: test role buttons
                 if (options.role === 'edit') {
                     obj.find('.tab-ftr').show();
                     obj.find('.tab-ftr').find('.btn').hide();
@@ -407,5 +448,11 @@
             }
         });
     };
+
+    // TODO: add global addNewTab
+
+    // TODO: add global removeNewTab
+
+    // TODO: add global setTitle
 
 })(jQuery);
