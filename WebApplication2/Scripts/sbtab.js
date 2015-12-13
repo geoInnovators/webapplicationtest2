@@ -13,7 +13,8 @@
             {
                 title: '',
                 isActive: true,
-                content: ''  // content , როცა ajaxUrl არ არის მითითებული
+                content: '',  // content , როცა ajaxUrl არ არის მითითებული
+                hasEdit: true // role : edit-ის დროს აქვს თუ არა edit როლი
                 // createContent  // ახლის შექმნისას გვერდი, როცა createAjaxUrl  არ არის მითითებული
                 // viewName    --> views saxeli
                 // ajaxUrl       --> refresh-ის მისამართი
@@ -27,6 +28,7 @@
                 // afterRefresh   --> ფუნქცია ჩატვირთვის მერე
                 // createAfterRefresh  --> ფუნქცია ახალი(შესაქმნელი) ობიექტის ჩატვირთვის მერე
                 // isEditable
+                
             }
         ]
     };
@@ -41,6 +43,43 @@
             $.error('Method ' + method + ' does not exists.');
         }
     };
+
+
+
+    function updateButtonsVisibility(obj) {
+        var pluginData = obj.data('sbtab');
+        var index = pluginData.activeIndex;
+        var activeTab = pluginData.tabs[index];
+        obj.find('.tab-ftr').find('.btn').hide();
+        if (!activeTab.hasEdit) {
+            return;
+        }
+        if (pluginData.role === 'edit') {
+            if (activeTab.isEditable) {
+                obj.find('.tab-ftr').find('.tab-btn-save').show();
+                obj.find('.tab-ftr').find('.tab-btn-cancel').show();
+            } else {
+                obj.find('.tab-ftr').find('.tab-btn-edit').show();
+            }
+            return;
+        }
+        if (pluginData.role === 'create') {
+            if (index > 0)
+                obj.find('.tab-ftr').find('.tab-btn-prev').show();
+            else
+                obj.find('.tab-ftr').find('.tab-btn-prev').hide();
+
+            if (index < pluginData.tabs.length - 1)
+                obj.find('.tab-ftr').find('.tab-btn-next').show();
+            else
+                obj.find('.tab-ftr').find('.tab-btn-next').hide();
+
+            if (index === pluginData.tabs.length - 1)
+                obj.find('.tab-ftr').find('.tab-btn-create').show();
+            else
+                obj.find('.tab-ftr').find('.tab-btn-create').hide();
+        }
+    }
 
 
     ///////// refresh, edit, cancel, save /////////
@@ -98,6 +137,7 @@
         var activeTab = pluginData.tabs[pluginData.activeIndex];
         activeTab.isEditable = true;
         obj.data('sbtab', pluginData);
+        updateButtonsVisibility(obj);
         refresh(obj);
     }
 
@@ -106,6 +146,7 @@
         var activeTab = pluginData.tabs[pluginData.activeIndex];
         activeTab.isEditable = false;
         obj.data('sbtab', pluginData);
+        updateButtonsVisibility(obj);
         refresh(obj);
     }
 
@@ -265,7 +306,7 @@
         var lis = obj.find('.tab-ul').find('li');
         lis.removeClass('tab-active');
         $(lis[index]).addClass('tab-active');
-
+        updateButtonsVisibility(obj);
         refresh(obj);
     }
 
@@ -294,6 +335,7 @@
     }
 
     function removeTab(obj, index) {
+
         var pluginData = obj.data('sbtab');
         pluginData.tabs.splice(index, 1);
 
@@ -366,11 +408,11 @@
                     obj.find('.tab-ftr').find('.tab-btn-edit').on('click', function () {
                         editTab(obj);
                     });
-                    obj.find('.tab-ftr').find('.tab-btn-save').show();
+                    //obj.find('.tab-ftr').find('.tab-btn-save').show();
                     obj.find('.tab-ftr').find('.tab-btn-save').on('click', function () {
                         saveTab(obj);
                     });
-                    obj.find('.tab-ftr').find('.tab-btn-cancel').show();
+                    //obj.find('.tab-ftr').find('.tab-btn-cancel').show();
                     obj.find('.tab-ftr').find('.tab-btn-cancel').on('click', function () {
                         cancelSaveTab(obj);
                     });
