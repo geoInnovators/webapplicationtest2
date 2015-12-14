@@ -355,9 +355,6 @@
         gotoIndex(obj, pluginData.activeIndex);
     }
 
-
-
-
     function setTitle(obj, title) {
         var pluginData = obj.data('ssdialog');
         pluginData.title = title;
@@ -368,6 +365,7 @@
 
 
     ////////////////////////////////////////////////////////////////////////////////////
+
     methods.init = function (options) {
         options = $.extend({}, defaults, options); //Apply on all selected elements
         return this.each(function () {
@@ -441,60 +439,62 @@
         });
     };
 
-    methods.goto = function (index, params) {
+    methods.goto = function (index) {
         return this.each(function () {
-            var $this = $(this), pluginData = $this.data('ssdialog');
-
-            //Check if plugin is initialized
-            if (pluginData) {
-                if (pluginData.ajaxUrl !== '')
-                    loadContent($this, params);
-                open($this);
-                if (pluginData.expanded === true)
-                    expand($this);
-                else
-                    collapse($this);
-                if (typeof pluginData.opened == 'function') {
-                    pluginData.opened.call(this);
-                }
-            }
+            var $this = $(this);
+            gotoIndex($this, index);
         });
     };
 
-    methods.gotoNext = function (index, params) {
+    methods.gotoFirst = function () {
         return this.each(function () {
-            var $this = $(this), pluginData = $this.data('ssdialog');
-
-            //Check if plugin is initialized
-            if (pluginData) {
-                if (pluginData.ajaxUrl !== '')
-                    loadContent($this, params);
-                open($this);
-                if (pluginData.expanded === true)
-                    expand($this);
-                else
-                    collapse($this);
-                if (typeof pluginData.opened == 'function') {
-                    pluginData.opened.call(this);
-                }
-            }
+            var $this = $(this);
+            gotoFirst($this);
         });
     };
 
-    methods.refresh = function (params) {
+    methods.gotoLast = function () {
         return this.each(function () {
-            var $this = $(this), pluginData = $this.data('ssdialog');
-            //Check if plugin is initialized
-            if (pluginData && pluginData.ajaxUrl !== '') {
-                loadContent($this, params);
-            }
+            var $this = $(this);
+            gotoLast($this);
         });
     };
 
-    // TODO: add global addNewTab
+    methods.addNewTab = function (params) {
+        return this.each(function () {
+            var $this = $(this);
+            addNewTab($this, params);
+        });
+    };
 
-    // TODO: add global removeNewTab
+    methods.removeTab = function (index) {
+        return this.each(function () {
+            var $this = $(this);
+            removeTab($this, index);
+        });
+    };
 
-    // TODO: add global setTitle
+    methods.setTitle = function (title) {
+        return this.each(function () {
+            var $this = $(this);
+            setTitle($this, title);
+        });
+    };
+
+    methods.updateSettings = function (options) {
+        return this.each(function () {
+            var $this = $(this), pluginData = $this.data('sbtab');
+            $.extend(pluginData, options);
+            $this.data('sbtab', pluginData);
+        });
+    };
+
+    methods.updateTabSettings = function (index, options) {
+        return this.each(function () {
+            var $this = $(this), pluginData = $this.data('sbtab');
+            $.extend(pluginData.tabs[index], options);
+            $this.data('sbtab', pluginData);
+        });
+    };
 
 })(jQuery);
