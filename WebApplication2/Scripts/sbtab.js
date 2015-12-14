@@ -1,11 +1,13 @@
 ﻿(function ($) {
 
+    // TODO: add custom buttons 
+    // TODO: role=path
     var methods = {},
     defaults = {
         tabsize: 'normal',  // large,normal,small
         activeIndex: 0,
-        firstVisible: true,
-        refreshOnInit: false,
+        firstTabVisible: true,
+        refreshOnInit: false, // გვერდის ჩატვირთვისას ჩაიტვირთოს თუ არა
         role: 'normal',  // normal,edit,create,path
         // aftercancelCreate  --> function
         // afterCreate  --> function
@@ -23,12 +25,10 @@
                 // createAjaxParams --> refresh-ის პარამეტრები
                 // ajaxCreateUrl       --> ახალი ჩანაწერების refresh-ის მისამართი
                 // ajaxCreateParams    --> ახალი ჩანაწერების refresh-ის პარამეტრები
-                // autoRefresh   --> უკვე ჩატვირთული გვერდის ხელთავიდან ჩატვირთვა თუ არა
-                // confirmSave
+                // confirmSave   --> შენახვისას ამოვიდეს თუ არა შეკითხვა
                 // afterRefresh   --> ფუნქცია ჩატვირთვის მერე
                 // createAfterRefresh  --> ფუნქცია ახალი(შესაქმნელი) ობიექტის ჩატვირთვის მერე
-                // isEditable
-                
+                // isEditable  --> role=edit-ის დროს რეჟიმი
             }
         ]
     };
@@ -64,6 +64,7 @@
             return;
         }
         if (pluginData.role === 'create') {
+            obj.find('.tab-ftr').find('.tab-btn-create-cancel').show();
             if (index > 0)
                 obj.find('.tab-ftr').find('.tab-btn-prev').show();
             else
@@ -94,7 +95,7 @@
         else if (activeTab.viewName) {
             var fn = window[activeTab.viewName + '_afterRefresh'];
             if (typeof fn === "function")
-                fn(cnt, activeTab.isEditable); // TODO: გასატესტია
+                fn(cnt, activeTab.isEditable);
         }
     }
 
@@ -221,20 +222,7 @@
                     cnt.html($(data));
                     createAfterRefreshCall(obj);
 
-                    if( index > 0)
-                        obj.find('.tab-ftr').find('.tab-btn-prev').show();
-                    else 
-                        obj.find('.tab-ftr').find('.tab-btn-prev').hide();
-
-                    if (index < pluginData.tabs.length - 1)
-                        obj.find('.tab-ftr').find('.tab-btn-next').show();
-                    else
-                        obj.find('.tab-ftr').find('.tab-btn-next').hide();
-
-                    if (index === pluginData.tabs.length - 1)
-                        obj.find('.tab-ftr').find('.tab-btn-create').show();
-                    else
-                        obj.find('.tab-ftr').find('.tab-btn-create').hide();
+                    updateButtonsVisibility(obj);
 
                 },
                 error: function () {
@@ -319,7 +307,13 @@
         gotoIndex(obj, pluginData.tabs.length -1);
     }
     /////////////////////////////////////////////////
-
+    function updateTabHeadersVisibility(obj) {
+        if ((options.tabs.length === 1) && !firstTabVisible)
+            obj.find('.tab-li').hide();
+        else {
+            obj.find('.tab-li').show();
+        }
+    }
 
     function addNewTab(obj, tabParams) {
         var pluginData = obj.data('sbtab');
@@ -332,6 +326,7 @@
         li.on('click', function () {
             gotoIndex(obj, pluginData.tabs.length-1 ); 
         });
+        updateTabHeadersVisibility(obj);
     }
 
     function removeTab(obj, index) {
@@ -353,6 +348,7 @@
         }
         obj.data('sbtab', pluginData);
         gotoIndex(obj, pluginData.activeIndex);
+        updateTabHeadersVisibility(obj);
     }
 
     function setTitle(obj, title) {
@@ -361,9 +357,6 @@
         obj.find('.header_dialog').html(title);
         obj.data('ssdialog', pluginData);
     }
-
-
-
     ////////////////////////////////////////////////////////////////////////////////////
 
     methods.init = function (options) {
@@ -398,43 +391,39 @@
                     });
                 }
 
-                // TODO: test role buttons
                 if (options.role === 'edit') {
-                    obj.find('.tab-ftr').show();
                     obj.find('.tab-ftr').find('.btn').hide();
-                    obj.find('.tab-ftr').find('.tab-btn-edit').show();
                     obj.find('.tab-ftr').find('.tab-btn-edit').on('click', function () {
                         editTab(obj);
                     });
-                    //obj.find('.tab-ftr').find('.tab-btn-save').show();
                     obj.find('.tab-ftr').find('.tab-btn-save').on('click', function () {
                         saveTab(obj);
                     });
-                    //obj.find('.tab-ftr').find('.tab-btn-cancel').show();
                     obj.find('.tab-ftr').find('.tab-btn-cancel').on('click', function () {
                         cancelSaveTab(obj);
                     });
                 }
                 if (options.role === 'create') {
-                    obj.find('.tab-ftr').show();
                     obj.find('.tab-ftr').find('.btn').hide();
-                    obj.find('.tab-ftr').find('.tab-btn-next').show();
                     obj.find('.tab-ftr').find('.tab-btn-next').on('click', function () {
-                        editTab(obj);
+                        createTab(obj);
                     });
-                    obj.find('.tab-ftr').find('.tab-btn-prev').show();
                     obj.find('.tab-ftr').find('.tab-btn-prev').on('click', function () {
-                        saveTab(obj);
+                        createPrevTab(obj);
                     });
-                    obj.find('.tab-ftr').find('.tab-btn-create').show();
                     obj.find('.tab-ftr').find('.tab-btn-create').on('click', function () {
-                        cancelSaveTab(obj);
+                        createTab(obj);
+                    });
+                    obj.find('.tab-ftr').find('.tab-btn-create-cancel').on('click', function () {
+                        createCancel(obj);
                     });
                 }
-                // check firstVisible
-                if ((options.tabs.length === 1) && !firstVisible)
-                    obj.find('.tab-li').hide();
+                
+                updateTabHeadersVisibility(obj);
 
+                if (refreshOnInit) {
+                    gotoFirst(obj);
+                }
             }
         });
     };
