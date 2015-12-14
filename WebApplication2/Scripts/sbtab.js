@@ -1,7 +1,6 @@
 ﻿(function ($) {
 
     // TODO: add custom buttons 
-    // TODO: role=path
     var methods = {},
     defaults = {
         tabsize: 'normal',  // large,normal,small
@@ -96,6 +95,13 @@
             var fn = window[activeTab.viewName + '_afterRefresh'];
             if (typeof fn === "function")
                 fn(cnt, activeTab.isEditable);
+            fn = window[activeTab.viewName + '_customButtons'];
+            if (typeof fn === "function") {
+                var buttons = fn(cnt, activeTab);
+                for (var button in buttons) {
+                    
+                }
+            }
         }
     }
 
@@ -289,13 +295,21 @@
         pluginData.activeIndex = index;
         var activeTab = pluginData.tabs[index];
         activeTab.isEditable = false;
-        obj.data('sbtab', pluginData);
-
         var lis = obj.find('.tab-ul').find('li');
         lis.removeClass('tab-active');
         $(lis[index]).addClass('tab-active');
+
+        if (pluginData.role === 'path') {
+            var count = pluginData.tabs.length - index - 1;
+            pluginData.tabs.splice(index + 1, count);
+            for (var i = 0; i < count; i++) {
+                obj.find('.tab-ul').find('li:last').remove();
+            }
+        }
+        obj.data('sbtab', pluginData);
         updateButtonsVisibility(obj);
         refresh(obj);
+
     }
 
     function gotoFirst(obj) {
@@ -386,9 +400,11 @@
                         li.addClass('tab-active');
                     }
                     var index = i;
-                    li.on('click', function () {
-                        gotoIndex(obj, index); // TODO: gasatestia
-                    });
+                    if (options.role !== 'create') {
+                        li.on('click', function() {
+                            gotoIndex(obj, index); // TODO: gasatestia
+                        });
+                    }
                 }
 
                 if (options.role === 'edit') {

@@ -30,4 +30,16 @@
     function TestTabView_afterCreateRefresh(cnt) {
         // after create refresh call
     }
+    function TestTabView_customButtons(cnt, tabParams) {
+        // create custom buttons
+        return [
+            {
+                'name': 'test button',
+                'type': 'normal',  // TODO: button type
+                'func' : function() {
+                    alert('good');
+                }
+            }
+        ];
+    }
 </script>
