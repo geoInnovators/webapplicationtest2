@@ -9,27 +9,23 @@
         role: 'normal',  // normal,edit,create,path
         // aftercancelCreate  --> function
         // afterCreate  --> function
-        tabs: [
-            {
+        tabs: []
+    },
+
+    defaultsTab = {
                 title: '',
                 isActive: true,
                 content: '',  // content , როცა ajaxUrl არ არის მითითებული
                 hasEdit: true // role : edit-ის დროს აქვს თუ არა edit როლი
-                // createContent  // ახლის შექმნისას გვერდი, როცა createAjaxUrl  არ არის მითითებული
                 // viewName    --> views saxeli
                 // ajaxUrl       --> refresh-ის მისამართი
-                // createAjaxUrl       --> create refresh-ის მისამართი
                 // ajaxParams    --> refresh-ის პარამეტრები
-                // createAjaxParams --> refresh-ის პარამეტრები
-                // ajaxCreateUrl       --> ახალი ჩანაწერების refresh-ის მისამართი
-                // ajaxCreateParams    --> ახალი ჩანაწერების refresh-ის პარამეტრები
                 // confirmSave   --> შენახვისას ამოვიდეს თუ არა შეკითხვა
                 // afterRefresh   --> ფუნქცია ჩატვირთვის მერე
-                // createAfterRefresh  --> ფუნქცია ახალი(შესაქმნელი) ობიექტის ჩატვირთვის მერე
                 // isEditable  --> role=edit-ის დროს რეჟიმი
-            }
-        ]
     };
+
+
 
 
     $.fn.sbtab = function (method) {
@@ -140,6 +136,7 @@
             });
         } else {
             cnt.html(activeTab.content);
+            afterRefreshCall(obj);
         }
         obj.data('sbtab', pluginData);
     }
@@ -199,8 +196,8 @@
         var cnt = obj.find('.tab-cnt');
         var index = pluginData.activeIndex;
         var activeTab = pluginData.tabs[index];
-        if (activeTab.createAfterRefresh) {
-            activeTab.createAfterRefresh.call(cnt[0]);
+        if (activeTab.afterRefresh) {
+            activeTab.afterRefresh.call(cnt[0]);
         }
         else if (activeTab.viewName) {
             var fn = window[activeTab.viewName + '_afterCreateRefresh'];
@@ -214,13 +211,13 @@
         var cnt = obj.find('.tab-cnt');
         var index = pluginData.activeIndex;
         var activeTab = pluginData.tabs[index];
-        if (activeTab.createAjaxUrl) {
+        if (activeTab.ajaxUrl) {
             $.ajax({
-                url: pluginData.createAjaxUrl,
+                url: pluginData.ajaxUrl,
                 type: "Post",
                 dataType: "html",
                 contentType: 'application/json',
-                data: JSON.stringify(activeTab.createAjaxParams),
+                data: JSON.stringify(activeTab.ajaxParams),
                 beforeSend: function () {
                     // obj.find('.cnt').html('<div style="height:325px;text-align: center;"><img src="/Images/loading_icon.gif" /></div>');
                     // TODO: show loading
@@ -232,16 +229,16 @@
                 success: function (data) {
                     cnt.html($(data));
                     createAfterRefreshCall(obj);
-
                     updateButtonsVisibility(obj);
-
                 },
                 error: function () {
                     // TODO: show error
                 }
             });
         } else {
-            cnt.html(activeTab.createContent);
+            cnt.html(activeTab.content);
+            createAfterRefreshCall(obj);
+            updateButtonsVisibility(obj);
         }
         obj.data('sbtab', pluginData);
     }
@@ -325,6 +322,13 @@
         var pluginData = obj.data('sbtab');
         gotoIndex(obj, pluginData.tabs.length -1);
     }
+
+    function gotoActiveIndex(obj) {
+        var pluginData = obj.data('sbtab');
+        gotoIndex(obj, pluginData.activeIndex);
+    }
+
+
     /////////////////////////////////////////////////
     function updateTabHeadersVisibility(obj) {
         if ((options.tabs.length === 1) && !firstTabVisible)
@@ -336,7 +340,7 @@
 
     function addNewTab(obj, tabParams) {
         var pluginData = obj.data('sbtab');
-        var newTab = $.extend({}, defaults.tabs[0], tabParams);
+        var newTab = $.extend({}, defaultsTab, tabParams);
         pluginData.tabs.push(newTab);
         obj.data('sbtab', pluginData);
         var li = $('<li class="tab-li"></li>');
@@ -392,12 +396,12 @@
                 // constructing li-s
                 var i;
                 for (i = 0; i < options.tabs.length; i++) {
+                    options.tabs[i] = $.extend({}, defaultsTab, options.tabs[i]);
                     var cTab = options.tabs[i];
                     // create li
                     var li = $('<li class="tab-li"></li>');
                     obj.find('.tab-ul').append(li);
                     // set title
-                    if (!cTab.title) cTab.title = '';
                     li.html(cTab.title);
                     // check active state
                     if (options.tabs[i].isActive) {

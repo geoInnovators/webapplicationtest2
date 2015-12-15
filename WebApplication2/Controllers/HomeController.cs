@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
@@ -33,6 +34,13 @@ namespace WebApplication2.Controllers
             ViewBag.button = button;
             return PartialView();
         }
+
+        public ActionResult TestTabView(int button)
+        {
+            return PartialView( new TestTabViewModel{Username = button.ToString()}  );
+        }
+
+        
 
         
 

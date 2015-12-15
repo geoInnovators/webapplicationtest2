@@ -8,11 +8,8 @@
 <div class="btn btn-default" id="button3">show dialog3</div>
 <div class="btn btn-default" id="button4">show dialog4</div>
 
-<div class="tab-container">
+<div class="tab-container" id="test_tab">
     <ul class="tab-ul">
-        <li class="tab-li tab-active">pirveli</li>
-        <li class="tab-li">meore</li>
-        <li class="tab-li">mesame</li>
     </ul>
     <div class="tab-cnt">
     </div>
@@ -53,7 +50,7 @@
 
 
 
-@SBDialogView.SBDialog(new SBDialogParams
+@*@SBDialogView.SBDialog(new SBDialogParams
 {
     Id = "dialogContainer",
     Width = 800,
@@ -61,24 +58,41 @@
     Title = "test header",
     Content = Html.Partial("~/Views/Home/ViewTest.cshtml",DateTime.Today ).ToHtmlString(),
     Page = this
-})
+})*@
+
 @section scripts
 {
     <script type="text/javascript">
-        $(function () {
+        $(function() {
+            $('#test_tab').sbtab({
+                'refreshOnInit': true,
+                'tabs': [
+                    {
+                        title: 'first tab',
+                        ajaxUrl: '/Home/TestTabView',
+                        viewName: 'TestTabView',
 
-            $("#button1").on("click", function () {
+                    },
+                    {
+                        title: 'second tab',
+                        content: '<h1>test</h1>'
+                    }
+                ]
+            });
+
+
+            $("#button1").on("click", function() {
                 $('#dialogContainer').ssdialog('open');
             });
-            $("#button2").on("click", function () {
+            $("#button2").on("click", function() {
                 sbconfirm('გსურთ მოსწავლის გაუქმება?', function() {
                     alert('kaia');
                 });
             });
-            $("#button3").on("click", function () {
+            $("#button3").on("click", function() {
                 sbsuccess('ოპერაცია დასრულდა წარმატებით', true);
             });
-            $("#button4").on("click", function () {
+            $("#button4").on("click", function() {
                 sberror('სისტემური შეცდომა');
             });
 
