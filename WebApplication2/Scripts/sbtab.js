@@ -1,6 +1,5 @@
 ﻿(function ($) {
 
-    // TODO: add custom buttons 
     var methods = {},
     defaults = {
         tabsize: 'normal',  // large,normal,small
@@ -98,8 +97,14 @@
             fn = window[activeTab.viewName + '_customButtons'];
             if (typeof fn === "function") {
                 var buttons = fn(cnt, activeTab);
-                for (var button in buttons) {
-                    
+                var ftr = obj.find('.tab-ftr');
+                for (var i = 0; i < buttons.length; i++) {
+                    var button = buttons[i];
+                    var htmlButton = $('<div class="btn ' + button.class + ' tab-btn-custom">' + button.text + '</div>');
+                    ftr.append(htmlButton);
+                    htmlButton.on('click', (function (btn) {
+                        btn.func();
+                    })(button));
                 }
             }
         }
@@ -356,9 +361,9 @@
         var i;
         for (i = 0; i < lis.length; i++) {
             var li = $(lis[i]);
-            li.on('click', function () {
-                gotoIndex(obj, i); // TODO: gasatestia
-            });
+            li.on('click', (function (value) {
+                gotoIndex(obj, value);
+            })(i));
         }
         obj.data('sbtab', pluginData);
         gotoIndex(obj, pluginData.activeIndex);
@@ -380,9 +385,9 @@
             if (!data) {
                 //obj.data('sbtab', options);
                 // check tab size
-                if (options.tabsize == 'large')
+                if (options.tabsize === 'large')
                     obj.find('.tab-ul').addClass('tab-lg');
-                if (options.tabsize == 'small')
+                if (options.tabsize === 'small')
                     obj.find('.tab-ul').addClass('tab-sm');
                 // constructing li-s
                 var i;
@@ -399,11 +404,10 @@
                         options.activeIndex = i;
                         li.addClass('tab-active');
                     }
-                    var index = i;
                     if (options.role !== 'create') {
-                        li.on('click', function() {
-                            gotoIndex(obj, index); // TODO: gasatestia
-                        });
+                        li.on('click', (function(index) {
+                            gotoIndex(obj, index);
+                        })(i));
                     }
                 }
 
