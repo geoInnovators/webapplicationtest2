@@ -52,14 +52,14 @@
                 'refreshOnInit': true,
                 'tabs': [
                     {
-                        title: 'first tab',
-                        ajaxUrl: '/Home/TestTabView',
-                        viewName: 'TestTabView',
-
-                    },
-                    {
                         title: 'second tab',
                         content: '<h1>test</h1>'
+                    },
+                    {
+                        title: 'first tab',
+                        ajaxUrl: '/Home/TestTabView',
+                        ajaxParams: {button : 1},
+                        viewName: 'TestTabView'
                     }
                 ]
             });

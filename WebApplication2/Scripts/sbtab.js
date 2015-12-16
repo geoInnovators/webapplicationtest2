@@ -113,7 +113,7 @@
         var activeTab = pluginData.tabs[index];
         if (activeTab.ajaxUrl) {
             $.ajax({
-                url: pluginData.ajaxUrl,
+                url: activeTab.ajaxUrl,
                 type: "Post",
                 dataType: "html",
                 contentType: 'application/json',
@@ -213,7 +213,7 @@
         var activeTab = pluginData.tabs[index];
         if (activeTab.ajaxUrl) {
             $.ajax({
-                url: pluginData.ajaxUrl,
+                url: activeTab.ajaxUrl,
                 type: "Post",
                 dataType: "html",
                 contentType: 'application/json',
