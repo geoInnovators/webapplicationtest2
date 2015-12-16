@@ -3,11 +3,6 @@
     ViewBag.Title = "DialogTest";
 }
 
-<div class="btn btn-default" id="button1">show dialog1</div>
-<div class="btn btn-default" id="button2">show dialog2</div>
-<div class="btn btn-default" id="button3">show dialog3</div>
-<div class="btn btn-default" id="button4">show dialog4</div>
-
 <div class="tab-container" id="test_tab">
     <ul class="tab-ul">
     </ul>
@@ -49,17 +44,6 @@
 </div>
 
 
-
-@*@SBDialogView.SBDialog(new SBDialogParams
-{
-    Id = "dialogContainer",
-    Width = 800,
-    Height = 300,
-    Title = "test header",
-    Content = Html.Partial("~/Views/Home/ViewTest.cshtml",DateTime.Today ).ToHtmlString(),
-    Page = this
-})*@
-
 @section scripts
 {
     <script type="text/javascript">
@@ -78,22 +62,6 @@
                         content: '<h1>test</h1>'
                     }
                 ]
-            });
-
-
-            $("#button1").on("click", function() {
-                $('#dialogContainer').ssdialog('open');
-            });
-            $("#button2").on("click", function() {
-                sbconfirm('გსურთ მოსწავლის გაუქმება?', function() {
-                    alert('kaia');
-                });
-            });
-            $("#button3").on("click", function() {
-                sbsuccess('ოპერაცია დასრულდა წარმატებით', true);
-            });
-            $("#button4").on("click", function() {
-                sberror('სისტემური შეცდომა');
             });
 
         });

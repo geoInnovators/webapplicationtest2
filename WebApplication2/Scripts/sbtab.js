@@ -331,7 +331,8 @@
 
     /////////////////////////////////////////////////
     function updateTabHeadersVisibility(obj) {
-        if ((options.tabs.length === 1) && !firstTabVisible)
+        var pluginData = obj.data('sbtab');
+        if ((pluginData.tabs.length === 1) && !firstTabVisible)
             obj.find('.tab-li').hide();
         else {
             obj.find('.tab-li').show();
@@ -374,11 +375,11 @@
         updateTabHeadersVisibility(obj);
     }
 
-    function setTitle(obj, title) {
-        var pluginData = obj.data('ssdialog');
-        pluginData.title = title;
-        obj.find('.header_dialog').html(title);
-        obj.data('ssdialog', pluginData);
+    function setTitle(obj, title, index) {
+        var pluginData = obj.data('sbtab');
+        pluginData.tabs[index].title = title;
+        obj.find('.tab-ul').find('li:eq('+ index +')').html(title);
+        obj.data('sbtab', pluginData);
     }
     ////////////////////////////////////////////////////////////////////////////////////
 
@@ -387,7 +388,7 @@
         return this.each(function () {
             var obj = $(this), data = obj.data('sbtab');
             if (!data) {
-                //obj.data('sbtab', options);
+                obj.data('sbtab', options);
                 // check tab size
                 if (options.tabsize === 'large')
                     obj.find('.tab-ul').addClass('tab-lg');
@@ -445,7 +446,7 @@
                 
                 updateTabHeadersVisibility(obj);
 
-                if (refreshOnInit) {
+                if (options.refreshOnInit) {
                     gotoFirst(obj);
                 }
             }
@@ -487,10 +488,10 @@
         });
     };
 
-    methods.setTitle = function (title) {
+    methods.setTitle = function (title, index) {
         return this.each(function () {
             var $this = $(this);
-            setTitle($this, title);
+            setTitle($this, title, index);
         });
     };
 
