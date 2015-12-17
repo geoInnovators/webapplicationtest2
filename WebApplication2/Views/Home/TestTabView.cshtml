@@ -15,7 +15,8 @@
         // return save ajax params to be send
         return {
             type: "Post",
-            dataType: "html",
+            dataType: "json",
+            url: '/Home/TestTabViewSave',
             // contentType: 'application/json',
             data: cnt.find('.my_form').serialize()
         };

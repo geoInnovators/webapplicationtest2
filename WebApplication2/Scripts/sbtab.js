@@ -90,6 +90,7 @@
             var fn = window[activeTab.viewName + '_afterRefresh'];
             if (typeof fn === "function")
                 fn(cnt, activeTab.isEditable);
+            if (activeTab.isEditable) return;
             fn = window[activeTab.viewName + '_customButtons'];
             if (typeof fn === "function") {
                 var buttons = fn(cnt, activeTab);
@@ -99,7 +100,9 @@
                     var htmlButton = $('<div class="btn ' + button.class + ' tab-btn-custom">' + button.text + '</div>');
                     ftr.append(htmlButton);
                     htmlButton.on('click', (function (btn) {
-                        btn.func();
+                        return function() {
+                            btn.func();
+                        }
                     })(button));
                 }
             }
@@ -107,9 +110,13 @@
     }
 
     function refresh(obj) {
+        
         var pluginData = obj.data('sbtab');
         var cnt = obj.find('.tab-cnt');
         var index = pluginData.activeIndex;
+
+       // alert('shemovida ' + index);
+
         var activeTab = pluginData.tabs[index];
         if (activeTab.ajaxUrl) {
             $.ajax({
@@ -292,8 +299,10 @@
     ///////////////////////////////////////////////////////////
 
     ///////// gotoIndex, gofirst, golast ////////////
+
     function gotoIndex(obj, index) {
         var pluginData = obj.data('sbtab');
+        
         pluginData.activeIndex = index;
         var activeTab = pluginData.tabs[index];
         activeTab.isEditable = false;
@@ -312,6 +321,12 @@
         updateButtonsVisibility(obj);
         refresh(obj);
 
+    }
+
+    function tabClick(obj, index) {
+        var pluginData = obj.data('sbtab');
+        if (pluginData.activeIndex !== index)
+            gotoIndex(obj, index);
     }
 
     function gotoFirst(obj) {
@@ -367,7 +382,9 @@
         for (i = 0; i < lis.length; i++) {
             var li = $(lis[i]);
             li.on('click', (function (value) {
-                gotoIndex(obj, value);
+                return function () {
+                    tabClick(obj, index);
+                }
             })(i));
         }
         obj.data('sbtab', pluginData);
@@ -410,8 +427,10 @@
                         li.addClass('tab-active');
                     }
                     if (options.role !== 'create') {
-                        li.on('click', (function(index) {
-                            gotoIndex(obj, index);
+                        li.on('click', (function (index) {
+                            return function () {
+                                tabClick(obj, index);
+                            }
                         })(i));
                     }
                 }
@@ -443,7 +462,7 @@
                         createCancel(obj);
                     });
                 }
-                
+
                 updateTabHeadersVisibility(obj);
 
                 if (options.refreshOnInit) {

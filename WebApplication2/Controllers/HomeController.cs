@@ -35,12 +35,18 @@ namespace WebApplication2.Controllers
             return PartialView();
         }
 
-        public ActionResult TestTabView(int button)
+
+        // view
+        public ActionResult TestTabView(int button, bool isEditable = false)
         {
-            return PartialView( new TestTabViewModel{Username = button.ToString()}  );
+            return PartialView( new TestTabViewModel{Username = button.ToString(), IsEditable = isEditable} );
         }
 
-        
+        // save
+        public ActionResult TestTabViewSave(TestTabViewModel model)
+        {
+            return Json("good", JsonRequestBehavior.AllowGet);
+        }        
 
         
 

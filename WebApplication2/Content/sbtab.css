@@ -1,0 +1,65 @@
+﻿.tab-container {
+    
+}
+
+.tab-container ul.tab-ul {
+    padding: 0;
+    margin: 0;
+}
+
+.tab-container ul.tab-ul.tab-lg {
+    font-size: larger;
+}
+
+.tab-container ul.tab-ul.tab-sm {
+    font-size: smaller;
+}
+
+.tab-container ul.tab-ul li.tab-li {
+    display: inline;
+    background-color:#D9D9D9;
+    margin:2px;
+    padding:5px;
+    cursor:pointer;
+}
+
+.tab-container ul.tab-ul li.tab-active {
+    background-color:#00B98D;
+    color:white;
+    font-weight:bold;
+}
+
+.tab-container .tab-cnt {
+    
+}
+
+.tab-container .tab-ftr {
+    
+}
+
+.tab-container .tab-ftr .btn {
+    
+}
+
+
+.tab-container .tab-ftr .tab-btn-save {
+    
+}
+.tab-container .tab-ftr .tab-btn-cancel {
+    
+}
+.tab-container .tab-ftr .tab-btn-edit {
+    
+}
+.tab-container .tab-ftr .tab-btn-next {
+    
+}
+.tab-container .tab-ftr .tab-btn-prev {
+    
+}
+.tab-container .tab-ftr .tab-btn-create {
+    
+}
+.tab-container .tab-ftr .tab-btn-create-cancel {
+    
+}
