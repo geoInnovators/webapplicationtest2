@@ -11,6 +11,7 @@ namespace WebApplication2.Models
         [Required]
         public string Username { get; set; }
 
+        public string LastName { get; set; }
 
         public bool IsEditable { get; set; }
 

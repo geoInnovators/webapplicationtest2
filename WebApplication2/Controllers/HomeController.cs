@@ -45,6 +45,7 @@ namespace WebApplication2.Controllers
         // save
         public ActionResult TestTabViewSave(TestTabViewModel model)
         {
+            var i = ModelState.IsValid
             return Json("good", JsonRequestBehavior.AllowGet);
         }        
 
