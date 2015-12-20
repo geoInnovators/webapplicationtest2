@@ -7,6 +7,7 @@
         firstTabVisible: true,
         refreshOnInit: false, // გვერდის ჩატვირთვისას ჩაიტვირთოს თუ არა
         role: 'normal',  // normal,edit,create,path
+        insideContainer: 'true', // dialogshia tu pageze
         // aftercancelCreate  --> function
         // afterCreate  --> function
         tabs: []
@@ -76,6 +77,14 @@
         }
     }
 
+
+    function refreshCntSize(obj) {
+        var pluginData = obj.data('sbtab');
+        var cnt = obj.find('.tab-cnt');
+        var header = obj.find('.tab-ul');
+        var footer = obj.find('.tab-ftr');
+        cnt.height( obj.height() - header.height() - footer.height() );
+    }
 
     ///////// refresh, edit, cancel, save /////////
     function afterRefreshCall(obj) {
@@ -343,7 +352,6 @@
         gotoIndex(obj, pluginData.activeIndex);
     }
 
-
     /////////////////////////////////////////////////
     function updateTabHeadersVisibility(obj) {
         var pluginData = obj.data('sbtab');
@@ -465,6 +473,13 @@
 
                 updateTabHeadersVisibility(obj);
 
+
+                if (options.insideContainer) {
+                    obj.height( 'height', '100%' );
+                    obj.find('.tab-ftr').css({ 'position': 'absolute', 'bottom': '0', 'left': '0', 'width': '100%' });
+                    refreshCntSize(obj);
+                }
+
                 if (options.refreshOnInit) {
                     gotoFirst(obj);
                 }
@@ -527,6 +542,13 @@
             var $this = $(this), pluginData = $this.data('sbtab');
             $.extend(pluginData.tabs[index], options);
             $this.data('sbtab', pluginData);
+        });
+    };
+
+    methods.refreshCntSize = function () {
+        return this.each(function () {
+            var $this = $(this);
+            refreshCntSize($this);
         });
     };
 

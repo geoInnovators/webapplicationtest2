@@ -3,12 +3,11 @@
     ViewBag.Title = "DialogTest";
 }
 
-<div class="tab-container" id="test_tab">
-    <ul class="tab-ul">
-    </ul>
-    <div class="tab-cnt">
+<div class="tab-container" id="test_tab" style="height: 300px; position: relative; border: 1px solid black">
+    <ul class="tab-ul" style="height: 30px;"></ul>
+    <div class="tab-cnt" style="border: 1px solid black; overflow: auto;">
     </div>
-    <div class="tab-ftr">
+    <div class="tab-ftr" style="border: 1px solid black; height: 40px; position: absolute; bottom: 0; left: 0; width: 100%">
         @*edit case*@
         <div class="btn btn-success tab-btn-save">
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
@@ -54,7 +53,7 @@
                 'tabs': [
                     {
                         title: 'second tab',
-                        content: '<h1>test</h1>'
+                        content: '<h1>test</h1><h1>test</h1><h1>test</h1><h1>test</h1><h1>test</h1><h1>test</h1>'
                     },
                     {
                         title: 'first tab',
@@ -64,7 +63,7 @@
                     }
                 ]
             });
-
+            $('#test_tab').sbtab('refreshCntSize');
         });
 
     </script>
