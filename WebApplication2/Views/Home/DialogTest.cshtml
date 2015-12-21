@@ -3,6 +3,8 @@
     ViewBag.Title = "DialogTest";
 }
 
+
+
 <div class="tab-container" id="test_tab" style="height: 300px; position: relative; border: 1px solid black">
     <ul class="tab-ul" style="height: 30px;"></ul>
     <div class="tab-cnt" style="border: 1px solid black; overflow: auto;">
@@ -58,7 +60,7 @@
                     {
                         title: 'first tab',
                         ajaxUrl: '/Home/TestTabView',
-                        ajaxParams: {button : 1},
+                        ajaxParams: { button: 1 },
                         viewName: 'TestTabView'
                     }
                 ]
@@ -67,5 +69,7 @@
         });
 
     </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
 }
 
