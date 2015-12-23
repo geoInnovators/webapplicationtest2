@@ -175,11 +175,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestAuthorizedController.cs" />
+    <Compile Include="CoreClasses\BaseCacheHelper.cs" />
+    <Compile Include="CoreClasses\ControllerAuthorizeAttribute.cs" />
+    <Compile Include="CoreClasses\CustomException.cs" />
+    <Compile Include="CoreClasses\CustomHandleErrorAttribute.cs" />
     <Compile Include="CoreClasses\GeneralAuthorizeAttribute.cs" />
     <Compile Include="CoreClasses\GeneralUser.cs" />
+    <Compile Include="CoreClasses\LoggedInPersonsCache.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -187,7 +192,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\TestTabViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -292,6 +296,8 @@
     <Content Include="Views\Home\DialogTest.cshtml" />
     <Content Include="Views\Home\ViewTest.cshtml" />
     <Content Include="Views\Home\TestTabView.cshtml" />
+    <Content Include="Views\Home\Loggin.cshtml" />
+    <Content Include="Views\TestAuthorized\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

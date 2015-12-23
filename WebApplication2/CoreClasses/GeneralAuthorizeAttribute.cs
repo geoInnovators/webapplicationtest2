@@ -11,7 +11,7 @@ namespace WebApplication2.CoreClasses
 {
     public abstract class GeneralAuthorizeAttribute : AuthorizeAttribute
     {
-        public abstract bool IsGood(IPrincipal user);
+        protected abstract bool IsGood(IPrincipal user);
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {

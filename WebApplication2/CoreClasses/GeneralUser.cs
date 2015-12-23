@@ -13,10 +13,12 @@ namespace WebApplication2.CoreClasses
             Token = Guid.NewGuid();
             Identity = new GenericIdentity(Token.ToString());
         }
-        public virtual bool IsInRole(string role)
+
+        public bool IsInRole(string role)
         {
             return true;
         }
+
         public IIdentity Identity { get; private set; }
         public Guid? Token { get; set; }
 

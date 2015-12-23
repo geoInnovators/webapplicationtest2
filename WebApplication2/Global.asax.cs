@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebApplication2.CoreClasses;
 
 namespace WebApplication2
 {
@@ -23,9 +24,9 @@ namespace WebApplication2
             if (!HttpContext.Current.User.Identity.IsAuthenticated) return;
             Guid token;
             if (!Guid.TryParse(HttpContext.Current.User.Identity.Name, out token)) return;
-            //var person = LoggedinPersonsCache.Current.GetPersonByToken(token);
-            //if (person != null)
-            //    HttpContext.Current.User = person;
+            var person = LoggedinPersonsCache.Current.GetPersonByToken(token);
+            if (person != null)
+                HttpContext.Current.User = person;
         }
     }
 }

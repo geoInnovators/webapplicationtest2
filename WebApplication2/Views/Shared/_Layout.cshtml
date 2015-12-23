@@ -103,5 +103,21 @@
 
 </div>
 
+<script type="text/javascript">
+    $(function () {
+        $.ajaxSetup({
+            error: function (x, status, error) {
+                //if (x.status == 403) {
+                //    alert("Sorry, your session has expired. Please login again to continue");
+                //    window.location.href = "/Account/Login";
+                //}
+                //else 
+                    alert("An error occurred: " + status + "nError: " + error);
+                
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
