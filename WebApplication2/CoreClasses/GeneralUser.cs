@@ -19,7 +19,7 @@ namespace WebApplication2.CoreClasses
             return true;
         }
 
-        public IIdentity Identity { get; private set; }
+        public IIdentity Identity { get;  set; }
         public Guid? Token { get; set; }
 
 

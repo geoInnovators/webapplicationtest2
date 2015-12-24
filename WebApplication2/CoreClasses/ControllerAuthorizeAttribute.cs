@@ -8,7 +8,7 @@ namespace WebApplication2.CoreClasses
 
         protected override bool IsGood(System.Security.Principal.IPrincipal user)
         {
-            return (UserType == null) || (user.GetType() == UserType);
+            return (UserType == null) || (user.GetType() == UserType) || user.GetType().IsSubclassOf(UserType);
         }
     }
 }

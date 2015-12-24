@@ -24,6 +24,15 @@ namespace WebApplication2.CoreClasses
             return true;
         }
 
+
+        public bool UpdatePerson(GeneralUser user)
+        {
+            Remove(user.Token.ToString());
+            AddSlidingKey(user.Token.ToString(), user, 2);
+            return true;
+        }
+
+
         public bool RemovePerson(GeneralUser user)
         {
             if (user == null || user.Token == null || !Exists(user.Token.ToString())) return false;
