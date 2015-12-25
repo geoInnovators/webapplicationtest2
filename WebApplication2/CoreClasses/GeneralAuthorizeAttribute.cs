@@ -20,20 +20,22 @@ namespace WebApplication2.CoreClasses
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
+            // unauthorized
             if (filterContext.HttpContext.User.Identity.IsAuthenticated && (filterContext.HttpContext.User is GeneralUser))
             {
                 if (IsAjax(filterContext))
                 {
-                    SetAjaxResult(filterContext, HttpStatusCode.Forbidden);
+                    SetAjaxResult(filterContext, HttpStatusCode.Forbidden, "unauthorized");
                 }
                 else
                     filterContext.Result = new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
+            // unauthenticated
             else
             {
                 if (IsAjax(filterContext))
                 {
-                    SetAjaxResult(filterContext, HttpStatusCode.Unauthorized);
+                    SetAjaxResult(filterContext, HttpStatusCode.Forbidden, "unauthenticated");
                 }
                 else
                     filterContext.Result = new HttpUnauthorizedResult();
@@ -41,11 +43,12 @@ namespace WebApplication2.CoreClasses
 
         }
 
-        private void SetAjaxResult(AuthorizationContext filterContext,  HttpStatusCode statusCode)
+        private void SetAjaxResult(AuthorizationContext filterContext,  HttpStatusCode statusCode, string text)
         {
-            filterContext.Result = new JsonResult()
+            filterContext.Result = 
+            new JsonResult()
             {
-                Data = "unauthenticated",
+                Data = new { text  = text},
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
             filterContext.HttpContext.Response.Clear();
