@@ -10,6 +10,7 @@ namespace WebApplication2.Controllers
 {
 
     [ControllerAuthorize(UserType = typeof(GeneralUser))]
+    [CustomHandleError]
     public class TestAuthorizedController : Controller
     {
         //
@@ -59,6 +60,13 @@ namespace WebApplication2.Controllers
                 Data = "ajax",
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
+        }
+
+        public string MyError()
+        {
+            int a = 5, b = 0;
+            int c = a/b;
+            return "good";
         }
 	}
 }

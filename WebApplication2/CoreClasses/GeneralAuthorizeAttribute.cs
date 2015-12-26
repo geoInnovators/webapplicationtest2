@@ -64,18 +64,5 @@ namespace WebApplication2.CoreClasses
             return base.AuthorizeCore(httpContext) && IsGood(httpContext.User);
 
         }
-
-        public override void OnAuthorization(AuthorizationContext filterContext)
-        {
-            try
-            {
-                base.OnAuthorization(filterContext);
-            }
-            catch (Exception ex)
-            {
-                throw;
-                //new ExceptionLog().LogException("", ex);
-            }
-        }
     }
 }

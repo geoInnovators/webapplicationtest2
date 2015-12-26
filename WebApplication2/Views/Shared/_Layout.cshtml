@@ -107,13 +107,16 @@
     $(function () {
         $.ajaxSetup({
             error: function (x, status, error) {
+                var jsonObject = JSON.parse(x.responseText);
                 if (x.status === 403) {
-                    var jsonObject = JSON.parse(x.responseText);
                     if (jsonObject.text === "unauthenticated") {
                         window.location.href = "/Home/Loggin";
                     } else {
                         alert(x.responseText);
                     }
+                }
+                if (x.status === 500) {
+                    
                 }
             }
         });
