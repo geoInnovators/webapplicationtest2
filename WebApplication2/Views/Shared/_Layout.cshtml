@@ -112,11 +112,11 @@
                     if (jsonObject.text === "unauthenticated") {
                         window.location.href = "/Home/Loggin";
                     } else {
-                        alert(x.responseText);
+                        alert('არაავტორიზებული შესვლა');
                     }
                 }
                 if (x.status === 500) {
-                    
+                    alert(jsonObject.text);
                 }
             }
         });

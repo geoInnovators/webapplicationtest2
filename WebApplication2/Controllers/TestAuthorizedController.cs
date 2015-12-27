@@ -68,5 +68,17 @@ namespace WebApplication2.Controllers
             int c = a/b;
             return "good";
         }
+
+        public JsonResult MyError1()
+        {
+            throw  new CustomException("modi modi");
+            return new JsonResult()
+            {
+                Data = "ajax",
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+
 	}
 }

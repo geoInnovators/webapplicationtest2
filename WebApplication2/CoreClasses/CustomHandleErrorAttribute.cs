@@ -18,13 +18,18 @@ namespace WebApplication2.CoreClasses
             {
                 return;
             }
+
+            LogException(filterContext.Exception);
+
             if (IsAjax(filterContext))
             {
+                var text = (filterContext.Exception is CustomException)
+                    ? filterContext.Exception.Message
+                    : "სისტემური შეცდომა";
                 filterContext.Result = new JsonResult()
                 {
-                    Data = filterContext.Exception.Message,
+                    Data = new {text} ,
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                    
                 };
 
                 filterContext.ExceptionHandled = true;
@@ -35,6 +40,18 @@ namespace WebApplication2.CoreClasses
             {
                 base.OnException(filterContext);
             }
+
         }
+
+        private void LogException(Exception ex)
+        {
+            var ex1 = ex as CustomException;
+            if (ex1 != null && !ex1.LogException)
+                return;
+
+            // logging 
+
+        }
+
     }
 }

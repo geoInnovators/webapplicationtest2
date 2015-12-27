@@ -7,6 +7,8 @@ namespace WebApplication2.CoreClasses
 {
     public class CustomException : Exception
     {
+        public bool LogException { get; set; }
+
         public CustomException()
         {
         }
@@ -14,6 +16,12 @@ namespace WebApplication2.CoreClasses
         public CustomException(string message)
             : base(message)
         {
+        }
+
+        public CustomException(string message, bool logException)
+            : base(message)
+        {
+            LogException = logException;
         }
     }
 }
