@@ -17,6 +17,13 @@ namespace WebApplication2.Controllers
             return View();
         }
 
+        public ActionResult DataTables()
+        {
+            return View();
+        }
+
+        
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

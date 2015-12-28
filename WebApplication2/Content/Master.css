@@ -858,9 +858,9 @@ table.dataTable td{
     z-index:1;
 }
 
-table.dataTable td:hover{
+/*table.dataTable td:hover{
     background-color: #8ca0c6;
-}
+}*/
 
 .upload {
     background-color: #34aadc;
