@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using WebApplication2.CoreClasses;
 using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
@@ -14,6 +16,13 @@ namespace WebApplication2.Controllers
         {
             return View();
         }
+
+        public ActionResult DataTables()
+        {
+            return View();
+        }
+
+        
 
         public ActionResult About()
         {
@@ -35,20 +44,41 @@ namespace WebApplication2.Controllers
             return PartialView();
         }
 
-        public ActionResult TestTabView(int button)
+
+        // view
+        public ActionResult TestTabView(int button, bool isEditable = false)
         {
-            return PartialView( new TestTabViewModel{Username = button.ToString()}  );
+            return PartialView( new TestTabViewModel{Username = button.ToString(), IsEditable = isEditable} );
         }
 
-        
+        // save
+        public ActionResult TestTabViewSave(TestTabViewModel model)
+        {
+            return Json("good", JsonRequestBehavior.AllowGet);
+        }
 
-        
+        public ActionResult Loggin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Loggin(string Name, string Password)
+        {
+            GeneralUser user = new GeneralUser();
+            user.Authenticate();
+            LoggedinPersonsCache.Current.AddNewPerson(user);
+            Response.Cookies.Add(FormsAuthentication.GetAuthCookie(user.Token.ToString(), false));
+            return RedirectToAction("Index", "TestAuthorized");
+        }
 
 
         public ActionResult DialogTest()
         {
             return View();
         }
+
+
 
     }
 }

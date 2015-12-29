@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<a href="~/TestAuthorized/ClearCache">clear cache</a>
+<a href="~/TestAuthorized/SignOut">sign out</a>
+<br/>
+<input type="button" value="ajax_non_authenticate" id="ajax_non_authenticate" />
+<input type="button" value="ajax_non_authorize" id="ajax_non_authorize" />
+<input type="button" value="ajax_knon_error" id="ajax_knon_error" />
+<input type="button" value="ajax_unknown_error" id="ajax_unknown_error" />
+<br/>
+<a href="~/TestAuthorized/SetTestUser">SetTestUser</a>
+<a href="~/TestAuthorized/SetGeneralUser">SetGeneralUser</a>
+<a href="~/Test1/Index">Test1</a>
+
+<a href="~/TestAuthorized/MyError">MyError</a>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $('#ajax_non_authenticate').on('click', function() {
+                $.ajax({
+                    url: '/TestAuthorized/AjaxResult',
+                    type: "Post",
+                    dataType: "json",
+                    contentType: 'application/json',
+                   // data: JSON.stringify($.extend(activeTab.ajaxParams, { 'isEditable': activeTab.isEditable })),
+                    success: function (data) {
+                        alert(data);
+                    }
+                });
+            });
+            $('#ajax_non_authorize').on('click', function () {
+                $.ajax({
+                    url: '/Test1/AjaxResult',
+                    type: "Post",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    // data: JSON.stringify($.extend(activeTab.ajaxParams, { 'isEditable': activeTab.isEditable })),
+                    success: function (data) {
+                    }
+                });
+            });
+            $('#ajax_knon_error').on('click', function () {
+                $.ajax({
+                    url: '/TestAuthorized/MyError1',
+                    type: "Post",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    // data: JSON.stringify($.extend(activeTab.ajaxParams, { 'isEditable': activeTab.isEditable })),
+                    success: function (data) {
+                        alert(data);
+                    }
+                });
+            });
+            $('#ajax_unknown_error').on('click', function () {
+                $.ajax({
+                    url: '/TestAuthorized/MyError',
+                    type: "Post",
+                    dataType: "text",
+                    contentType: 'application/json',
+                    // data: JSON.stringify($.extend(activeTab.ajaxParams, { 'isEditable': activeTab.isEditable })),
+                    success: function (data) {
+                        alert(data);
+                    }
+                });
+            });
+        });
+    </script>
+}

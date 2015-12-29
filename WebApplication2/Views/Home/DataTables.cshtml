@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "DataTables";
+}
+
+<div style="height: 40px;"></div>
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <th>Column 3</th>
+            <th>Column 4</th>
+        </tr>
+    </thead>
+    <tbody>
+    @for (int i = 0; i < 30; i++)
+    {
+    <tr>
+        <td>Data 1</td>
+        <td>Data 2</td>
+        <td>Data 3</td>
+        <td>Data 4</td>
+    </tr>        
+    }
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#table_id').DataTable({
+                searching: false,
+                "bLengthChange": false,
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ]
+            });
+        });
+
+    </script>
+}

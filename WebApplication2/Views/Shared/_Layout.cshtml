@@ -12,8 +12,12 @@
     <script src="~/Scripts/sbdialog.js"></script>
     <script src="~/Scripts/sbalerts.js"></script>
     <script src="~/Scripts/sbtab.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
 
-    <link href="~/Content/Master.css" rel="stylesheet" />
+    <link href="~/Content/Master.css" rel="stylesheet"/>
+    <link href="~/Content/sbtab.css" rel="stylesheet"/>
+    <link href="~/Content/DataTables/css/jquery.dataTables.css" rel="stylesheet"/>
+    <link href="~/Content/MyDataTable.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -101,6 +105,26 @@
 
 
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        $.ajaxSetup({
+            error: function (x, status, error) {
+                var jsonObject = JSON.parse(x.responseText);
+                if (x.status === 403) {
+                    if (jsonObject.text === "unauthenticated") {
+                        window.location.href = "/Home/Loggin";
+                    } else {
+                        alert('არაავტორიზებული შესვლა');
+                    }
+                }
+                if (x.status === 500) {
+                    alert(jsonObject.text);
+                }
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

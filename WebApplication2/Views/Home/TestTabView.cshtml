@@ -1,9 +1,12 @@
 ﻿@model WebApplication2.Models.TestTabViewModel
 
-<form class="my_form" novalidate="novalidate">
+<form class="my_form" novalidate="novalidate" role="form">
     @if (Model.IsEditable)
     {
         @Html.TextBoxFor(o => o.Username)
+        @Html.ValidationMessageFor(o => o.Username)
+        @Html.TextBoxFor(o => o.LastName)
+        <input type="submit" value="ok"/>
     }
     else
     {
@@ -15,7 +18,8 @@
         // return save ajax params to be send
         return {
             type: "Post",
-            dataType: "html",
+            dataType: "json",
+            url: '/Home/TestTabViewSave',
             // contentType: 'application/json',
             data: cnt.find('.my_form').serialize()
         };
@@ -25,6 +29,9 @@
         return {};
     }
     function TestTabView_afterRefresh(cnt, isEditable) {
+        if (isEditable) {
+            jQuery.validator.unobtrusive.parse(cnt.find('.my_form'));
+        }
         // after refresh call
     }
     function TestTabView_afterCreateRefresh(cnt) {
