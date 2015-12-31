@@ -58,7 +58,7 @@ table.dataTable thead tr {
 }
 
 .top {
-    height: 40px;
+    padding: 10px;
     background-color: deepskyblue;
     border-radius: 5px 5px 0px 0px;
     -moz-border-radius: 5px 5px 0px 0px;

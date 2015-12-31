@@ -458,6 +458,7 @@
     <Content Include="Views\TestAuthorized\Index.cshtml" />
     <Content Include="Views\Test1\Index.cshtml" />
     <Content Include="Views\Home\DataTables.cshtml" />
+    <Content Include="Views\Home\FirstTabTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

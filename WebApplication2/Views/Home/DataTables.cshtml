@@ -29,10 +29,35 @@
 {
     <script type="text/javascript">
         $(function () {
+
+            $('#test_tab').sbtab({
+                'refreshOnInit': true,
+                'role': 'edit',
+                'tabs': [
+                    {
+                        title: 'first tab',
+                        content: '<h1>test</h1><h1>test</h1><h1>test</h1><h1>test</h1><h1>test</h1><h1>test</h1>'
+                    },
+                    {
+                        title: 'second tab',
+                        ajaxUrl: '/Home/TestTabView',
+                        ajaxParams: { button: 1 },
+                        viewName: 'TestTabView'
+                    }
+                ]
+            });
+
+
+
+
             $('#table_id').DataTable({
                 "sDom": '<"top">rt<"bottom"ilp>'
             });
-        });
 
+            $('.top').append('<div class="btn btn-default">შექმნა</div>');
+            $('.top').append('<div class="btn btn-default">შექმნაaaa</div>');
+            $('.top').append('<div class="btn btn-default" style="float:right">შექმნა</div>');
+
+        });
     </script>
 }
