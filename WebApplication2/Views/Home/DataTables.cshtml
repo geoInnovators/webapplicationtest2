@@ -1,62 +1,66 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "DataTables";
 }
 
-<table id="table_id" class="stripe row-border hover" style="">
-    <thead>
-        <tr>
-            <th>Column 1</th>
-            <th>Column 2</th>
-            <th>Column 3</th>
-            <th>Column 4</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (int i = 0; i < 30; i++)
-        {
-            <tr>
-                <td>Data 1</td>
-                <td>Data 2</td>
-                <td>Data 3</td>
-                <td>Data 4</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="tab-container" id="test_tab" style="position: relative;">
+    <ul class="tab-ul" style="height: 30px;"></ul>
+    <div class="tab-cnt" style="border: 1px solid black; overflow: auto;">
+    </div>
+    <div class="tab-ftr" style="border: 1px solid black; height: 40px; position: absolute; bottom: 0; left: 0; width: 100%">
+        @*edit case*@
+        <div class="btn btn-success tab-btn-save">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            შენახვა
+        </div>
+        <div class="btn btn-danger tab-btn-cancel">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            გაუქმება
+        </div>
+        <div class="btn btn-info tab-btn-edit">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            რედაქტირება
+        </div>
+        @*create case*@
+        <div class="btn btn-danger tab-btn-next">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            შემდეგ
+        </div>
+        <div class="btn btn-success tab-btn-prev">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            წინა
+        </div>
+        <div class="btn btn-info tab-btn-create">
+            შექმნა
+        </div>
+        <div class="btn btn-danger tab-btn-create-cancel">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            გაუქმება
+        </div>
+        @*create case*@
+
+    </div>
+</div>
 
 @section scripts
 {
     <script type="text/javascript">
         $(function () {
-
             $('#test_tab').sbtab({
+                'tabsize': 'large',
                 'refreshOnInit': true,
-                'role': 'edit',
                 'tabs': [
                     {
                         title: 'first tab',
-                        content: '<h1>test</h1><h1>test</h1><h1>test</h1><h1>test</h1><h1>test</h1><h1>test</h1>'
+                        ajaxUrl: '/Home/FirstTabTable',
+                        viewName: 'FirstTabTable'
                     },
                     {
                         title: 'second tab',
-                        ajaxUrl: '/Home/TestTabView',
-                        ajaxParams: { button: 1 },
-                        viewName: 'TestTabView'
+                        ajaxUrl: '/Home/FirstTabTable',
+                        viewName: 'FirstTabTable'
                     }
                 ]
             });
-
-
-
-
-            $('#table_id').DataTable({
-                "sDom": '<"top">rt<"bottom"ilp>'
-            });
-
-            $('.top').append('<div class="btn btn-default">შექმნა</div>');
-            $('.top').append('<div class="btn btn-default">შექმნაaaa</div>');
-            $('.top').append('<div class="btn btn-default" style="float:right">შექმნა</div>');
 
         });
     </script>

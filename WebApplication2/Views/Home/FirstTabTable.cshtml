@@ -1,0 +1,38 @@
+﻿<table id="table_id" class="stripe row-border hover" style="">
+    <thead>
+    <tr>
+        <th>Column 1</th>
+        <th>Column 2</th>
+        <th>Column 3</th>
+        <th>Column 4</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (int i = 0; i < 30; i++)
+    {
+        <tr>
+            <td>Data 1</td>
+            <td>Data 2</td>
+            <td>Data 3</td>
+            <td>Data 4</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+    $(function() {
+        $('#table_id').DataTable({
+            "sDom": '<"top">rt<"bottom"ilp>'
+        });
+        $('.top').append('<div class="btn btn-default">შექმნა</div>');
+        $('.top').append('<div class="btn btn-default">შექმნაaaa</div>');
+        $('.top').append('<div class="btn btn-default" style="float:right">შექმნა</div>');
+    });
+
+    function TestTabView_afterRefresh(cnt, isEditable) {
+
+    }
+
+</script>
